@@ -82,7 +82,9 @@ impl CommandSetUnits {
     }
 }
 
+#[allow(dead_code)]
 pub struct CommandGetUnits;
+#[allow(dead_code)]
 impl CommandGetUnits {
     pub fn new() -> Self {
         Self {}

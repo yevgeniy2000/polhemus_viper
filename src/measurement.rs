@@ -38,10 +38,6 @@ pub mod viper {
             Self::new(timestamp, values, pos_unit, ori_unit)
         }
 
-        pub fn timestamp_secs(&self) -> f64 {
-            self.timestamp as f64 / 1000.0
-        }
-
         pub fn new(timestamp: i64, values: Vec<f32>, pos_unit: PosUnit, ori_unit: OriUnit) -> Self {
             if values.len() != 7 {
                 panic!("Invalid number of values in measurement: {}", values.len());

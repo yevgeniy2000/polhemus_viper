@@ -14,6 +14,7 @@ pub fn send_set_units_command(port: &mut Box<dyn SerialPort>, units : CommandUni
     send_frame(port, FrameType::Command, &body.to_bytes())
 }
 
+#[allow(dead_code)]
 pub(crate) fn send_get_units_command(port: &mut Box<dyn SerialPort>) -> io::Result<()> {
     let body = CommandGetUnits::new();
 
@@ -22,6 +23,7 @@ pub(crate) fn send_get_units_command(port: &mut Box<dyn SerialPort>) -> io::Resu
     send_frame(port, FrameType::Command, &body.to_bytes())
 }
 
+#[allow(dead_code)]
 pub(crate) fn send_get_single_pno_command(port: &mut Box<dyn SerialPort>, pno_frame_mode: PnoFrameMode) -> io::Result<()> {
     let body = CommandGetSinglePno::new(pno_frame_mode);
 

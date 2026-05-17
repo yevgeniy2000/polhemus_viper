@@ -4,7 +4,7 @@ pub mod viper {
     use crate::internal::command_units::CommandUnitsPayload;
     use crate::internal::frame::{read_frame, FrameType};
     use crate::internal::pno_frame_body::{PnoFrameBody, PnoFrameMode};
-    use crate::internal::sensor_commands::{send_set_units_command, send_start_continuous_command, send_stop_continuous_command};
+    use crate::internal::sensor_commands::{send_get_single_pno_command, send_get_units_command, send_set_units_command, send_start_continuous_command, send_stop_continuous_command};
     use serialport::SerialPort;
     use std::io;
     use std::time::Duration;
@@ -102,6 +102,37 @@ pub mod viper {
             Self::check_ack_response(&response)?;
 
             Ok(())
+        }
+
+        #[allow(dead_code)]
+        pub fn get_units(&mut self) -> io::Result<(PosUnit, OriUnit)> {
+            let response = self.execute_port(&|port| {
+                send_get_units_command(port)?;
+                Ok(())
+            })?;
+
+            let units = CommandUnitsPayload::from_bytes(&response.command_payload)
+                .ok_or_else(|| io::Error::new(io::ErrorKind::InvalidData, "Invalid units payload received"))?;
+
+            self.pos_unit = units.pos_unit;
+            self.ori_unit = units.ori_unit;
+            self.command_configuration.pos_unit = units.pos_unit;
+            self.command_configuration.ori_unit = units.ori_unit;
+
+            Ok((units.pos_unit, units.ori_unit))
+        }
+
+        #[allow(dead_code)]
+        pub fn get_single_pno(&mut self, pno_frame_mode: PnoFrameMode) -> io::Result<PnoFrameBody> {
+            let response = self.execute_port(&|port| {
+                send_get_single_pno_command(port, pno_frame_mode)?;
+                Ok(())
+            })?;
+
+            let pno_frame_body = PnoFrameBody::from_bytes(pno_frame_mode, self.pos_unit, self.ori_unit, &response.command_payload)
+                .ok_or_else(|| io::Error::new(io::ErrorKind::InvalidData, "Invalid PNO payload received"))?;
+
+            Ok(pno_frame_body)
         }
 
         fn configure_commands(&mut self) -> io::Result<()> {
