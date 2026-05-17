@@ -1,0 +1,16 @@
+[package]
+name = "polhemus_viper"
+version = "0.1.0"
+edition = "2024"
+authors = ["Yevgeniy <yevgeniy@example.com>"]
+description = "A Rust library for the Polhemus Viper electromagnetic tracking system."
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/example/polhemus_viper"
+readme = "README.md"
+keywords = ["polhemus", "viper", "sensor", "tracking"]
+categories = ["hardware-support"]
+
+[dependencies]
+serialport = "4"
+chrono = "0.4"
+ctrlc = "3.5.1"
