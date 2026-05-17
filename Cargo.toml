@@ -2,10 +2,10 @@
 name = "polhemus_viper"
 version = "0.1.0"
 edition = "2024"
-authors = ["Yevgeniy <yevgeniy@example.com>"]
+authors = ["Yevgeniy <yevgeniy.cherkashyn@tum.de>"]
 description = "A Rust library for the Polhemus Viper electromagnetic tracking system."
 license = "MIT OR Apache-2.0"
-repository = "https://github.com/example/polhemus_viper"
+repository = "https://github.com/yevgeniy2000/polhemus_viper"
 readme = "README.md"
 keywords = ["polhemus", "viper", "sensor", "tracking"]
 categories = ["hardware-support"]
